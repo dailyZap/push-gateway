@@ -1,0 +1,52 @@
+openapi: 3.0.0
+components:
+  examples: {}
+  headers: {}
+  parameters: {}
+  requestBodies: {}
+  responses: {}
+  schemas:
+    Message:
+      properties:
+        topic:
+          type: string
+        content:
+          type: string
+      required:
+        - topic
+        - content
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+info:
+  title: Push Notification Gateway API
+  version: 1.0.0
+  description: Internal API used by Social Network to deliver Push Notifications to App Users.
+paths:
+  /send:
+    post:
+      operationId: SendMessages
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    items:
+                      $ref: '#/components/schemas/Message'
+                    type: array
+      tags:
+        - Organizations
+      security:
+        - apiKey: []
+      parameters: []
+servers:
+  - description: Local Development
+    url: http://localhost5173/api/v1

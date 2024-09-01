@@ -21,7 +21,6 @@ export const load: PageServerLoad = async (event) => {
 			...s,
 			apiKeys: s.apiKeys.map((apiKey) => ({
 				...apiKey,
-				key: null,
 				shortenedKey: apiKey.key.slice(0, 8)
 			}))
 		})),

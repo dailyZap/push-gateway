@@ -37,26 +37,6 @@
 						<code class="code">{server.domain}</code>
 					</td>
 					<td>
-						<!-- {#each server.apiKeys as apiKey}
-							{#if apiKey.active}
-								<div class="flex items-center space-x-2">
-									<div class="badge badge-success">{apiKey.shortenedKey}...</div>
-									<form action="?/deactivateApiKey" method="post" use:enhance>
-										<input type="hidden" name="serverId" value={server.id} />
-										<input type="hidden" name="apiKeyId" value={apiKey.id} />
-										<button type="submit" class="btn btn-sm btn-error">Deactivate</button>
-									</form>
-								</div>
-							{:else}
-								<div class="badge badge-warning">{apiKey.shortenedKey}...</div>
-							{/if}
-						{/each}
-						{#if !server.apiKeys.find((apiKey) => apiKey.active)}
-							<form action="?/createApiKey" method="post" use:enhance>
-								<input type="hidden" name="serverId" value={server.id} />
-								<button type="submit" class="btn btn-sm btn-primary">Create API Key</button>
-							</form>
-						{/if} -->
 						<table class="table">
 							<tbody>
 								{#each server.apiKeys as apiKey}
@@ -67,6 +47,14 @@
 											{:else}
 												<div class="badge badge-warning">{apiKey.shortenedKey}...</div>
 											{/if}
+											<button
+												class="btn btn-outline btn-sm btn-primary"
+												on:click={() => {
+													navigator.clipboard.writeText(apiKey.key);
+												}}
+											>
+												<i class="fa fa-copy"></i>
+											</button>
 										</td>
 										<td>
 											Created: <Date date={apiKey.createdAt} />

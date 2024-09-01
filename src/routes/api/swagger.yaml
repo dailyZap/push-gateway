@@ -8,13 +8,13 @@ components:
   schemas:
     Message:
       properties:
-        topic:
+        deviceToken:
           type: string
-        content:
+        notificationId:
           type: string
       required:
-        - topic
-        - content
+        - deviceToken
+        - notificationId
       type: object
       additionalProperties: false
   securitySchemes:

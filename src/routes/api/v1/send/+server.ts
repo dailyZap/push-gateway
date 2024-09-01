@@ -40,8 +40,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 	const body = (await request.json().catch(() => null)) as {
 		messages: {
-			topic: string;
-			content: string;
+			deviceToken: string;
+			notificationId: string;
 		}[];
 	} | null;
 
@@ -49,12 +49,20 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		return fail(400, 'Bad Request');
 	}
 
+	for (const m of body.messages) {
+		if (typeof m.deviceToken !== 'string' || typeof m.notificationId !== 'string') {
+			return fail(400, 'Bad Request');
+		}
+		if (m.deviceToken.length === 0 || m.notificationId.length === 0) {
+			return fail(400, 'Bad Request');
+		}
+	}
+
 	await messaging.sendEach(
 		body.messages.map((m) => ({
-			topic: m.topic,
-			notification: {
-				title: 'New Message',
-				body: m.content
+			token: m.deviceToken,
+			data: {
+				notificationId: m.notificationId
 			}
 		}))
 	);

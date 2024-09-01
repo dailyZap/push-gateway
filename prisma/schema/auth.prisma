@@ -1,0 +1,18 @@
+model User {
+    id           String    @id @default(cuid())
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+    email        String    @unique
+    name         String
+    passwordHash String
+    servers      Server[]
+    sessions     Session[]
+}
+
+model Session {
+    id        String   @id
+    expiresAt DateTime
+
+    user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
+    userId String
+}

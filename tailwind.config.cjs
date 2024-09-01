@@ -1,4 +1,7 @@
 module.exports = {
 	content: ['./src/routes/**/*.{svelte,js,ts}'],
-	plugins: [require('daisyui')]
+	plugins: [require('daisyui')],
+	daisyui: {
+		themes: ['forest']
+	}
 };

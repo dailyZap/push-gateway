@@ -1,0 +1,7 @@
+services:
+  db:
+    image: postgres:12.20
+    env_file:
+      - .env
+    ports:
+      - '5439:5432'

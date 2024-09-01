@@ -1,1 +1,4 @@
-<button class="btn">Test-Button</button>
+Landing Page
+
+<a href="/auth/login">Login</a>
+<a href="/auth/register">Register</a>

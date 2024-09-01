@@ -1,0 +1,20 @@
+model Server {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    domain    String   @unique
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
+    apiKeys   ApiKey[]
+}
+
+model ApiKey {
+    id        String    @id @default(cuid())
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    key       String    @unique
+    server    Server    @relation(fields: [serverId], references: [id])
+    serverId  String
+    active    Boolean   @default(true)
+    lastUsed  DateTime?
+}

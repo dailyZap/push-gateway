@@ -4,6 +4,7 @@ import { prisma } from '$lib/server/db';
 import { randomBytes } from 'node:crypto';
 import { validateServerDomain } from '$lib/server/validators';
 import { MAX_SERVERS } from '$lib/config/config';
+import { id } from '$lib/helpers';
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) redirect(302, '/auth/login');
@@ -38,9 +39,10 @@ export const actions: Actions = {
 				userId: locals.user!.id
 			}
 		});
-		const apiKey = `apik_${randomBytes(32).toString('hex')}`;
+		const apiKey = `ak_live_${randomBytes(32).toString('hex')}`;
 		await prisma.apiKey.create({
 			data: {
+				id: id('ApiKey'),
 				key: apiKey,
 				serverId: server.id
 			}
@@ -90,6 +92,7 @@ export const actions: Actions = {
 
 		await prisma.server.create({
 			data: {
+				id: id('Server'),
 				domain,
 				userId: locals.user!.id
 			}

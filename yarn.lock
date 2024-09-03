@@ -3528,6 +3528,7 @@ __metadata:
     svelte: "npm:^4.2.7"
     svelte-check: "npm:^3.6.0"
     tailwindcss: "npm:^3.4.10"
+    typeid-js: "npm:^1.0.0"
     typescript: "npm:^5.0.0"
     uuid: "npm:^10.0.0"
     vite: "npm:^5.0.3"
@@ -4201,6 +4202,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typeid-js@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "typeid-js@npm:1.0.0"
+  dependencies:
+    uuidv7: "npm:^0.6.2"
+  checksum: 10c0/e7f76b2fcf17fea904bccd8fb3104c8f44279c0ebc2c1ff574415226c257601bc4dcbabbac5f365705fbc6cf084a6348301da42b9eccb08ebe808ca9f2fd46f8
+  languageName: node
+  linkType: hard
+
 "typescript@npm:^5.0.0, typescript@npm:^5.0.3":
   version: 5.5.4
   resolution: "typescript@npm:5.5.4"
@@ -4291,6 +4301,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 10c0/1607dd32ac7fc22f2d8f77051e6a64845c9bce5cd3dd8aa0070c074ec73e666a1f63c7b4e0f4bf2bc8b9d59dc85a15e17807446d9d2b17c8485fbc2147b27f9b
+  languageName: node
+  linkType: hard
+
+"uuidv7@npm:^0.6.2":
+  version: 0.6.3
+  resolution: "uuidv7@npm:0.6.3"
+  bin:
+    uuidv7: cli.js
+  checksum: 10c0/156208586741968a099f2ab996b3d855e14faf1fcc2b7f536eda6dcfadf382139ecc0ce93c293f2177f968e0859c4b8276cc05c6aaca36ef5a4caecd8dcafda7
   languageName: node
   linkType: hard
 

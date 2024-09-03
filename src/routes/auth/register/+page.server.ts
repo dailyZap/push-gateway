@@ -1,14 +1,13 @@
 // routes/signup/+page.server.ts
 import { lucia } from '$lib/server/auth';
 import { fail, redirect } from '@sveltejs/kit';
-import { generateIdFromEntropySize } from 'lucia';
 import { hash } from '@node-rs/argon2';
 
 import type { Actions } from './$types';
-import { dev } from '$app/environment';
 import { prisma } from '$lib/server/db';
 import { Prisma, type Server, type User } from '@prisma/client';
 import { validateServerDomain } from '$lib/server/validators';
+import { id } from '$lib/helpers';
 
 export const actions: Actions = {
 	register: async (event) => {
@@ -66,9 +65,11 @@ export const actions: Actions = {
 		try {
 			server = await prisma.server.create({
 				data: {
+					id: id('Server'),
 					domain,
 					user: {
 						create: {
+							id: id('User'),
 							name,
 							email,
 							passwordHash

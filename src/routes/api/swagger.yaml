@@ -25,7 +25,7 @@ components:
 info:
   title: Push Notification Gateway API
   version: 1.0.0
-  description: Internal API used by Social Network to deliver Push Notifications to App Users.
+  description: Internal API used by dailyZap to deliver Push Notifications to App Users and provide the daily timestamps.
 paths:
   /send:
     post:

@@ -12,9 +12,9 @@ export async function validateServerDomain(domain: string) {
 		});
 	}
 	const serverInfo = (await response?.json()) || {};
-	if (!dev && serverInfo.api !== 'socialnetwork') {
+	if (!dev && serverInfo.api !== 'dailyZap') {
 		return fail(400, {
-			message: 'Invalid server. Are you sure this is a social network server?'
+			message: 'Invalid server. Are you sure this is a dailyZap server?'
 		});
 	}
 	return true;

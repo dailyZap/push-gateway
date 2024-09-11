@@ -28,7 +28,7 @@
 		<input
 			class="input input-bordered"
 			type="text"
-			placeholder="social.example.com"
+			placeholder="dailyZap.example.com"
 			name="server"
 		/>
 		<small class="ms-3">(without protocol or path)</small>

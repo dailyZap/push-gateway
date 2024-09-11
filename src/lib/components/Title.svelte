@@ -3,5 +3,5 @@
 </script>
 
 <svelte:head>
-	<title>{title} | Social Network Push Gateway</title>
+	<title>{title} | dailyZap Push Gateway</title>
 </svelte:head>

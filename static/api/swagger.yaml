@@ -27,7 +27,7 @@ info:
   version: 1.0.0
   description: Internal API used by dailyZap to deliver Push Notifications to App Users and provide the daily timestamps.
 paths:
-  /send:
+  /v1/send:
     post:
       operationId: SendNotifications
       responses:
@@ -64,7 +64,7 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/Notification'
-  /auth/check:
+  /v1/auth/check:
     get:
       operationId: CheckAuth
       responses:
@@ -93,4 +93,4 @@ paths:
       parameters: []
 servers:
   - description: Local Development
-    url: http://localhost:5173/api/v1
+    url: http://localhost:5173/api

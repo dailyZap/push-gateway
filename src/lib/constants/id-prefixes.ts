@@ -1,5 +1,6 @@
 export const ModelPrefix = {
 	ApiKey: 'apik',
 	Server: 'srvr',
-	User: 'usr'
+	User: 'usr',
+	Moment: 'mmt'
 } as const;

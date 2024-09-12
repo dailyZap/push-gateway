@@ -1,0 +1,4 @@
+model Moment {
+  id        String   @id
+  timestamp DateTime @default(now())
+}

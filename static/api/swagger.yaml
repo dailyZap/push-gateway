@@ -17,6 +17,18 @@ components:
         - notificationId
       type: object
       additionalProperties: false
+    Moment:
+      properties:
+        id:
+          type: string
+        timestamp:
+          type: integer
+          format: date-time
+      required:
+        - id
+        - timestamp
+      type: object
+      additionalProperties: false
   securitySchemes:
     apiKey:
       type: apiKey
@@ -27,7 +39,7 @@ info:
   version: 1.0.0
   description: Internal API used by dailyZap to deliver Push Notifications to App Users and provide the daily timestamps.
 paths:
-  /v1/send:
+  /v1/notifications:
     post:
       operationId: SendNotifications
       responses:
@@ -91,6 +103,50 @@ paths:
       security:
         - apiKey: []
       parameters: []
+  /v1/moments:
+    get:
+      operationId: GetMoments
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  moments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Moment'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      tags:
+        - Moments
+      security:
+        - apiKey: []
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            maximum: 30
+            minimum: 1
+          description: Limit the number of moments to return
+        - name: after
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: date-time
+          description: Return moments after this timestamp
 servers:
   - description: Local Development
     url: http://localhost:5173/api

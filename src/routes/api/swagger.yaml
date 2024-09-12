@@ -38,15 +38,23 @@ paths:
               schema:
                 type: object
                 properties:
-                  messages:
-                    items:
-                      $ref: '#/components/schemas/Message'
-                    type: array
+                  success:
+                    type: boolean
       tags:
         - Organizations
       security:
         - apiKey: []
       parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                messages:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Message'
 servers:
   - description: Local Development
     url: http://localhost5173/api/v1

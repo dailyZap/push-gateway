@@ -6,7 +6,7 @@ components:
   requestBodies: {}
   responses: {}
   schemas:
-    Message:
+    Notification:
       properties:
         deviceToken:
           type: string
@@ -29,7 +29,7 @@ info:
 paths:
   /send:
     post:
-      operationId: SendMessages
+      operationId: SendNotifications
       responses:
         '200':
           description: Ok
@@ -41,7 +41,7 @@ paths:
                   success:
                     type: boolean
       tags:
-        - Organizations
+        - Push Notifications
       security:
         - apiKey: []
       parameters: []
@@ -51,10 +51,10 @@ paths:
             schema:
               type: object
               properties:
-                messages:
+                notifications:
                   type: array
                   items:
-                    $ref: '#/components/schemas/Message'
+                    $ref: '#/components/schemas/Notification'
 servers:
   - description: Local Development
     url: http://localhost5173/api/v1

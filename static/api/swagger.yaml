@@ -40,6 +40,15 @@ paths:
                 properties:
                   success:
                     type: boolean
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
       tags:
         - Push Notifications
       security:
@@ -55,6 +64,33 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/Notification'
+  /auth/check:
+    get:
+      operationId: CheckAuth
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      tags:
+        - Authentication
+      security:
+        - apiKey: []
+      parameters: []
 servers:
   - description: Local Development
-    url: http://localhost5173/api/v1
+    url: http://localhost:5173/api/v1

@@ -1,42 +1,12 @@
-import { prisma } from '$lib/server/db';
+import { checkApiKey, fail, ok } from '$lib/server/api';
 import { messaging } from '$lib/server/fcm';
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request, locals }) => {
-	const fail = (code: number, error: string) => {
-		return new Response(JSON.stringify({ error }), {
-			status: code,
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
-	};
-	const apiKey = request.headers.get('x-api-key');
-	if (!apiKey) {
-		return fail(401, 'Unauthorized');
+	const error = await checkApiKey(request);
+	if (error) {
+		return error;
 	}
-
-	const dbApiKey = await prisma.apiKey.findUnique({
-		where: {
-			key: apiKey
-		},
-		include: {
-			server: true
-		}
-	});
-
-	if (!dbApiKey || !dbApiKey.active) {
-		return fail(401, 'Unauthorized');
-	}
-
-	await prisma.apiKey.update({
-		where: {
-			id: dbApiKey.id
-		},
-		data: {
-			lastUsed: new Date()
-		}
-	});
 
 	const body = (await request.json().catch(() => null)) as {
 		notifications: {
@@ -83,9 +53,5 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		}))
 	);
 
-	return new Response(JSON.stringify({ success: true }), {
-		headers: {
-			'content-type': 'application/json'
-		}
-	});
+	return ok({ success: true });
 };

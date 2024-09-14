@@ -1,3 +1,4 @@
+import { NOTIFICATION_PRIORITIES } from '$lib/constants/notification-priorities';
 import { checkApiKey, fail, ok } from '$lib/server/api';
 import { messaging } from '$lib/server/fcm';
 import type { RequestHandler } from './$types';
@@ -34,22 +35,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			data: {
 				notificationId: m.notificationId
 			},
-			// Ensure that data-only notifications are also delivered when the app is closed.
-			android: {
-				priority: 'high'
-			},
-			apns: {
-				payload: {
-					aps: {
-						contentAvailable: true
-					}
-				},
-				headers: {
-					'apns-push-type': 'background',
-					'apns-priority': '5', // Must be `5` when `contentAvailable` is set to true.
-					'apns-topic': 'io.flutter.plugins.firebase.messaging' // Required for background notifications on iOS.
-				}
-			}
+			...NOTIFICATION_PRIORITIES
 		}))
 	);
 

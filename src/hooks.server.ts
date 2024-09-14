@@ -1,7 +1,10 @@
 // src/hooks.server.ts
 import { lucia } from '$lib/server/auth';
+import { bootup } from '$lib/server/bootup';
 import { prisma } from '$lib/server/db';
 import type { Handle } from '@sveltejs/kit';
+
+await bootup();
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const sessionId = event.cookies.get(lucia.sessionCookieName);

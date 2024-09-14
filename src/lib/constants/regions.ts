@@ -1,4 +1,4 @@
-export const TIMEZONES = {
+export const REGIONS = {
 	EU: { utcOffset: 1, timezone: 'Europe/Berlin' },
 	US: { utcOffset: -5, timezone: 'America/Chicago' },
 	WA: { utcOffset: +5, timezone: 'Asia/Karachi' },

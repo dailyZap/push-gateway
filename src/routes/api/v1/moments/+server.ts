@@ -1,3 +1,4 @@
+import { TIME_WINDOW, TIMEZONES } from '$lib/constants/timezones';
 import { id } from '$lib/helpers';
 import { checkApiKey, fail, ok } from '$lib/server/api';
 import { prisma } from '$lib/server/db';
@@ -97,26 +98,20 @@ async function createMoment(date: Date) {
 			date.getFullYear(),
 			date.getMonth(),
 			date.getDate(),
-			9 + Math.floor(Math.random() * 12),
+			TIME_WINDOW.start + Math.floor(Math.random() * (TIME_WINDOW.end - TIME_WINDOW.start)),
 			Math.floor(Math.random() * 60),
 			Math.floor(Math.random() * 60),
 			Math.floor(Math.random() * 1000)
 		);
 
-	const timezoneOffsetsHours = {
-		EU: 0,
-		US: -6,
-		WA: -8,
-		EA: 8
-	};
-
 	const timestampEU = randomTimeStamp();
+	timestampEU.setHours(timestampEU.getHours() + TIMEZONES.EU.utcOffset);
 	const timestampUS = new Date(timestampEU);
-	timestampUS.setHours(timestampEU.getHours() + timezoneOffsetsHours.US);
+	timestampUS.setHours(timestampEU.getHours() + TIMEZONES.US.utcOffset);
 	const timestampWA = new Date(timestampEU);
-	timestampWA.setHours(timestampEU.getHours() + timezoneOffsetsHours.WA);
+	timestampWA.setHours(timestampEU.getHours() + TIMEZONES.WA.utcOffset);
 	const timestampEA = new Date(timestampEU);
-	timestampEA.setHours(timestampEU.getHours() + timezoneOffsetsHours.EA);
+	timestampEA.setHours(timestampEU.getHours() + TIMEZONES.EA.utcOffset);
 
 	const justDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 	return await prisma.moment.create({

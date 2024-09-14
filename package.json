@@ -3,10 +3,10 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"start": "npm run dev",
-		"dev": "vite dev --host 0.0.0.0",
+		"start": "TZ=utc npm run dev",
+		"dev": "TZ=utc vite dev --host 0.0.0.0",
 		"build": "vite build",
-		"preview": "vite preview",
+		"preview": "TZ=utc vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check .",

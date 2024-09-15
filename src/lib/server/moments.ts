@@ -3,39 +3,43 @@ import { id } from '$lib/helpers';
 import { prisma } from './db';
 import { scheduleMoment } from './now';
 
-export async function ensureMomentsForMonth() {
-	const yesterday = new Date();
-	yesterday.setDate(yesterday.getDate() - 1);
-	const todayStart = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate());
-	let todayMoment = await prisma.moment.findFirst({
-		where: {
-			date: todayStart
-		}
-	});
-	if (!todayMoment) {
-		todayMoment = await createMoment(todayStart);
-	}
+export async function ensureMomentsForNext30Days() {
+	const today = new Date();
+	const startDay = new Date();
+	startDay.setDate(today.getDate() - 1);
+	const endDay = new Date();
+	endDay.setDate(today.getDate() + 30);
+	const generationStartDate = new Date(
+		startDay.getFullYear(),
+		startDay.getMonth(),
+		startDay.getDate()
+	);
+	const generationEndDate = new Date(endDay.getFullYear(), endDay.getMonth(), endDay.getDate());
 
-	// most future moment
-	const futureMoment = await prisma.moment.findFirstOrThrow({
+	const newestMoment = await prisma.moment.findFirst({
 		orderBy: {
 			date: 'desc'
 		}
 	});
-	const mostDaysInAdvance = 30;
-	// if not enough moments, create more
-	if (
-		!futureMoment ||
-		(futureMoment.date.getTime() - todayStart.getTime()) / (1000 * 60 * 60 * 24) < mostDaysInAdvance
-	) {
-		const daysToCreate =
-			mostDaysInAdvance -
-			(futureMoment.date.getTime() - todayStart.getTime()) / (1000 * 60 * 60 * 24);
-		for (let i = 0; i < daysToCreate; i++) {
-			await createMoment(
-				new Date(todayStart.getFullYear(), todayStart.getMonth(), todayStart.getDate() + i)
-			);
-		}
+
+	if (!newestMoment) {
+		await createMoments(generationStartDate, generationEndDate);
+		return;
+	}
+
+	const newestMomentDate = new Date(newestMoment.date);
+	if (newestMomentDate >= generationEndDate) return;
+
+	const lastGeneratedDate = newestMomentDate;
+	lastGeneratedDate.setDate(lastGeneratedDate.getDate() + 1);
+	await createMoments(lastGeneratedDate, generationEndDate);
+}
+
+async function createMoments(start: Date, end: Date) {
+	const date = new Date(start);
+	while (date <= end) {
+		await createMoment(date);
+		date.setDate(date.getDate() + 1);
 	}
 }
 

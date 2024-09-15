@@ -1,10 +1,10 @@
 import { scheduleJob } from 'node-schedule';
 import { prisma } from './db';
-import { ensureMomentsForMonth } from './moments';
+import { ensureMomentsForNext30Days } from './moments';
 import { scheduleMoment } from './now';
 
 export async function bootup() {
-	await ensureMomentsForMonth();
+	await ensureMomentsForNext30Days();
 	const startOfToday = new Date();
 	startOfToday.setHours(0, 0, 0, 0);
 	const moments = await prisma.moment.findMany({
@@ -18,6 +18,6 @@ export async function bootup() {
 		scheduleMoment(moment);
 	}
 	scheduleJob('0 1 0 * * *', async () => {
-		await ensureMomentsForMonth();
+		await ensureMomentsForNext30Days();
 	});
 }

@@ -39,9 +39,15 @@ components:
             EA:
               type: integer
               format: date-time
+          required:
+            - EU
+            - US
+            - WA
+            - EA
       required:
         - id
-        - timestamp
+        - date
+        - time
       type: object
       additionalProperties: false
   securitySchemes:

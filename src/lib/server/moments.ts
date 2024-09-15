@@ -3,18 +3,19 @@ import { id } from '$lib/helpers';
 import { prisma } from './db';
 import { scheduleMoment } from './now';
 
+function dayOnlyDate(date: Date) {
+	return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function offsetDateByDays(date: Date, days: number) {
+	date.setDate(date.getDate() + days);
+	return date;
+}
+
 export async function ensureMomentsForNext30Days() {
-	const today = new Date();
-	const startDay = new Date();
-	startDay.setDate(today.getDate() - 1);
-	const endDay = new Date();
-	endDay.setDate(today.getDate() + 30);
-	const generationStartDate = new Date(
-		startDay.getFullYear(),
-		startDay.getMonth(),
-		startDay.getDate()
-	);
-	const generationEndDate = new Date(endDay.getFullYear(), endDay.getMonth(), endDay.getDate());
+	const today = dayOnlyDate(new Date());
+	const startDate = offsetDateByDays(today, -1);
+	const endDate = offsetDateByDays(today, 30);
 
 	const newestMoment = await prisma.moment.findFirst({
 		orderBy: {
@@ -23,16 +24,16 @@ export async function ensureMomentsForNext30Days() {
 	});
 
 	if (!newestMoment) {
-		await createMoments(generationStartDate, generationEndDate);
+		await createMoments(startDate, endDate);
 		return;
 	}
 
 	const newestMomentDate = new Date(newestMoment.date);
-	if (newestMomentDate >= generationEndDate) return;
+	if (newestMomentDate >= endDate) return;
 
 	const lastGeneratedDate = newestMomentDate;
 	lastGeneratedDate.setDate(lastGeneratedDate.getDate() + 1);
-	await createMoments(lastGeneratedDate, generationEndDate);
+	await createMoments(lastGeneratedDate, endDate);
 }
 
 async function createMoments(start: Date, end: Date) {

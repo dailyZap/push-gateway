@@ -6,6 +6,7 @@
 		"start": "TZ=utc npm run dev",
 		"dev": "TZ=utc vite dev --host 0.0.0.0",
 		"build": "vite build",
+		"setup": "prisma generate",
 		"preview": "TZ=utc vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -15,7 +16,7 @@
 	"devDependencies": {
 		"@fortawesome/fontawesome-free": "^6.6.0",
 		"@lucia-auth/adapter-prisma": "^4.0.1",
-		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/adapter-node": "^5.2.3",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/node": "^22.5.1",
@@ -25,10 +26,10 @@
 		"daisyui": "^4.12.10",
 		"firebase-admin": "^12.4.0",
 		"lucia": "^3.2.0",
+		"node-schedule": "^2.1.1",
 		"postcss": "^8.4.41",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
-		"prisma": "5.19.0",
 		"svelte": "^4.2.7",
 		"svelte-check": "^3.6.0",
 		"tailwindcss": "^3.4.10",
@@ -40,7 +41,8 @@
 	"type": "module",
 	"packageManager": "yarn@4.4.1",
 	"dependencies": {
+		"@node-rs/argon2": "^1.8.3",
 		"@prisma/client": "5.19.0",
-		"node-schedule": "^2.1.1"
+		"prisma": "5.19.0"
 	}
 }

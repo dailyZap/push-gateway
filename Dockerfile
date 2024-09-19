@@ -14,4 +14,4 @@ RUN corepack enable && echo "nodeLinker: node-modules" > .yarnrc.yml && yarn wor
 
 EXPOSE 80
 
-CMD node index.js
+CMD npx prisma migrate deploy && node index.js

@@ -1,4 +1,4 @@
-import { Job, scheduleJob, cancelJob } from 'node-schedule';
+import { type Job, scheduleJob, cancelJob } from 'node-schedule';
 
 type ScheduledAction = () => void | Promise<void>;
 

@@ -12,7 +12,7 @@ export async function validateServerDomain(domain: string) {
 		});
 	}
 	const serverInfo = (await response?.json()) || {};
-	if (!dev && serverInfo.api !== 'dailyZap') {
+	if (!dev && serverInfo.name !== '@dailyzap/server') {
 		return fail(400, {
 			message: 'Invalid server. Are you sure this is a dailyZap server?'
 		});

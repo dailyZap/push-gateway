@@ -8,8 +8,9 @@ function dayOnlyDate(date: Date) {
 }
 
 function offsetDateByDays(date: Date, days: number) {
-	date.setDate(date.getDate() + days);
-	return date;
+	const newDate = new Date(date);
+	newDate.setDate(date.getDate() + days);
+	return newDate;
 }
 
 export async function ensureMomentsForNext30Days() {

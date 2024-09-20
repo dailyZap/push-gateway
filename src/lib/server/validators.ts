@@ -3,8 +3,8 @@ import { fail } from '@sveltejs/kit';
 
 export async function validateServerDomain(domain: string) {
 	// must be reachable via https
-	// check /api/v1/info
-	const url = `https://${domain}/api/v1/info`;
+	// check /v1/info
+	const url = `https://${domain}/v1/info`;
 	const response = await fetch(url).catch(() => null);
 	if (!dev && !response?.ok) {
 		return fail(400, {

@@ -32,7 +32,7 @@ export const actions: Actions = {
 
 		// validate server
 		// must be domain only
-		if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(domain)) {
+		if (!/^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/.test(domain)) {
 			return fail(400, {
 				message: 'Invalid server'
 			});
